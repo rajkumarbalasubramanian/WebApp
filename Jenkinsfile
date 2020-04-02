@@ -14,7 +14,7 @@ stages {
     
     stage('Build Project') {
 	    steps {    
-	    sh 'mvn clean package'
+	    sh 'mvn -DskipTests=True clean package'
         }
     }
 	stage("Deploy to QA") {
