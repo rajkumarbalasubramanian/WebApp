@@ -1,7 +1,7 @@
 node {
 
     stage('Clone sources') {
-	git poll: false,
+	git poll: true,
        	    url: 'https://github.com/ashishgupta861/webapp.git'
     }
 }
