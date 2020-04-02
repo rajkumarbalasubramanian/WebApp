@@ -1,5 +1,11 @@
-node {
+pipeline {
+	agent any
 
+	tools {
+		maven "maven"
+	}
+
+stages {
     stage('Clone sources') {
 	git url: 'https://github.com/ashishgupta861/webapp.git'
     }
@@ -8,4 +14,4 @@ node {
                 sh 'mvn clean package'
         }
 }
-	 
+}
