@@ -7,11 +7,15 @@ pipeline {
 
 stages {
     stage('Clone sources') {
-	git url: 'https://github.com/ashishgupta861/webapp.git'
+	    steps {
+		    git url: 'https://github.com/ashishgupta861/webapp.git'
+    		}
     }
     
     stage('Build Project') {
-                sh 'mvn clean package'
+	    steps {    
+	    sh 'mvn clean package'
         }
+    }
 }
 }
