@@ -14,7 +14,7 @@
     padding:5px;
 }
 #login{
-    color:white;
+    color:blue;
     text-align:center;
 	right:25%;
     padding:10px;
