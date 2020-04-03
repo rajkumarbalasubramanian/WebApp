@@ -10,18 +10,7 @@ pipeline {
          string(name: 'tomcat-prod', defaultValue: '34.209.233.6', description: 'Production Server')
     } 
 
-    // Get Artifactory server instance, defined in the Artifactory Plugin administration page.
-    def server = Artifactory.server "artifactory"
-    // Create an Artifactory Maven instance.
-   def uploadSpec = """{
-  "files": [
-    {
-      "pattern": "target/*.war",
-      "target": "libs-release-local/"
-    }
- ]
-}"""
-	
+    
 stages {
     stage('Clone sources') {
 	    steps {
@@ -44,8 +33,21 @@ stages {
 	
 stage('Artifactory configuration') {
 		steps {
-	
-        server.upload(uploadspec)
+			script {
+			// Get Artifactory server instance, defined in the Artifactory Plugin administration page.
+    			def server = Artifactory.server "artifactory"
+    			
+			// Create an Artifactory Maven instance.
+   			def uploadSpec = """{
+  			"files": [
+    			{
+      				"pattern": "target/*.war",
+      				"target": "libs-release-local/"
+    			}
+ 			]
+		}"""
+		server.upload(uploadspec)
+			}
     }
 }	
 }
