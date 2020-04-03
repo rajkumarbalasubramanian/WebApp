@@ -52,7 +52,7 @@ stage('Artifactory configuration') {
 }
 	stage('Deploy to prod') {
 		steps {
-			sshagent(['tomcat-qa']) {
+			sshagent(['tomcat-prod']) {
 				sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@${params.tomcat_prod}:/opt/tomcat/webapps/"
 			}
 			}
