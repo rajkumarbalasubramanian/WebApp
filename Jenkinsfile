@@ -23,6 +23,17 @@ stages {
 	    sh 'mvn -DskipTests=True clean package'
         }
     }
+	
+	
+	stage("Static Code Analysis"){
+		steps {
+		withSonarQubeEnv('sonarqube') {
+      			 sh "mvn sonar:sonar"
+       		}
+	}
+	
+	}
+	
 	stage('Deploy to QA') {
 		steps {
 			sshagent(['tomcat-qa']) {
