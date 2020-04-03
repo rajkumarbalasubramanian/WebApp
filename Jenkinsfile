@@ -46,7 +46,7 @@ stage('Artifactory configuration') {
     			}
  			]
 		}"""
-		server.upload(uploadspec)
+		server.upload(uploadSpec)
 			}
     }
 }	
