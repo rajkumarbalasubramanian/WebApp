@@ -49,9 +49,14 @@ stage('Artifactory configuration') {
 		server.upload(uploadSpec)
 			}
     }
-}	
 }
-	
-	
+	stage('Deploy to prod') {
+		steps {
+			sshagent(['tomcat-qa']) {
+				sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@${params.tomcat_prod}:/opt/tomcat/webapps/"
+			}
+			}
+			}
+}
 }
 
