@@ -4,6 +4,11 @@ pipeline {
 	tools {
 		maven "maven"
 	}
+	
+	parameters { 
+         string(name: 'tomcat-qa', defaultValue: '35.166.210.154', description: 'Staging Server')
+         string(name: 'tomcat-prod', defaultValue: '34.209.233.6', description: 'Production Server')
+    } 
 
 stages {
     stage('Clone sources') {
@@ -20,7 +25,7 @@ stages {
 	stage('Deploy to QA') {
 		steps {
 			sshagent(['tomcat-qa']) {
-   			sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@3.133.120.68:/opt/tomcat/webapps/'
+   			sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@${params.tomcat-qa}:/opt/tomcat/webapps/'
 			}
 			}
 			}
