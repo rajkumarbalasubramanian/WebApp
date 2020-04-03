@@ -6,8 +6,8 @@ pipeline {
 	}
 	
 	parameters { 
-         string(name: 'tomcat-qa', defaultValue: '3.133.120.68', description: 'QA Server')
-         string(name: 'tomcat-prod', defaultValue: '34.209.233.6', description: 'Production Server')
+         string(name: 'tomcat_qa', defaultValue: '3.133.120.68', description: 'QA Server')
+         string(name: 'tomcat_prod', defaultValue: '34.209.233.6', description: 'Production Server')
     } 
 
     
@@ -26,7 +26,7 @@ stages {
 	stage('Deploy to QA') {
 		steps {
 			sshagent(['tomcat-qa']) {
-				sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@${params.tomcat-qa}:/opt/tomcat/webapps/"
+				sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@${params.tomcat_qa}:/opt/tomcat/webapps/"
 			}
 			}
 			}
