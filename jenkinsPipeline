@@ -20,17 +20,32 @@ pipeline {
         sh 'mvn -DskipTests=True clean compile'
 	}
    }
+   stage("Static Code Analysis"){
+ 	withSonarQubeEnv('sonarstatic') {
+        sh 'mvn sonar:sonar -Dsonar.sources=. -Dsonar.tests=. -Dsonar.test.inclusions=**/test/java/servlet/createpage_junit.java -Dsonar.exclusions=**/test/java/servlet/createpage_junit.java'
+	 } 
+   }
    stage('Build Project') {
    steps {
 	  sh 'mvn -DskipTests=True clean package' 
 	  }
    }
-   stage('functional test') {
+   stage('Functional test') {
    steps {
-	  sh 'mvn -DskipTests=True -f Acceptancetest/pom.xml test' 
+	  sh 'mvn -f functionaltest/pom.xml test' 
 	  }
    }
    
+    stage('Sanity test') {
+   steps {
+	  sh 'mvn -f Acceptancetest/pom.xml test' 
+	  }
+   }
+   stage('Performance test') {
+   steps {
+         blazeMeterTest credentialsId: 'perf', testId: '7889218.taurus', workspaceId: '474121'
+	}
+    }
     
    }
 }
