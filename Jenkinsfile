@@ -6,8 +6,8 @@ pipeline {
 	}
 	
 	parameters { 
-         string(name: 'tomcat_qa', defaultValue: '3.133.120.68', description: 'QA Server')
-         string(name: 'tomcat_prod', defaultValue: '34.209.233.6', description: 'Production Server')
+         string(name: 'tomcat_qa', defaultValue: '3.135.204.131', description: 'QA Server')
+         string(name: 'tomcat_prod', defaultValue: '18.188.183.63', description: 'Production Server')
     } 
 
     
@@ -35,14 +35,6 @@ stages {
 	}
 	
 	}
-	
-	stage("Quality Gate") {
-            steps {
-              timeout(time: 1, unit: 'HOURS') {
-                waitForQualityGate abortPipeline: true
-              }
-            }
-          }
 	
 	stage('Deploy to QA') {
 		steps {
