@@ -50,7 +50,7 @@ stages {
 		{
 			sshagent(['tomcat-qa']) 
 			{
-				sh "curl -v -u --upload-file target/*.war http://ubuntu@${params.tomcat_qa}:8080/manager/text/deploy?path=/myapp&update=true"
+				sh "curl -v --upload-file target/*.war http://ubuntu@${params.tomcat_qa}:8080/manager/text/deploy?path=/myapp&update=true"
 			}
 		}
 	}
