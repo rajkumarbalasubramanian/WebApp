@@ -32,6 +32,13 @@ pipeline {
 	  sh 'mvn -DskipTests=True clean package' 
 	  }
    }
+   stage('Deploy to QA') {
+   steps {
+	   sshagent(['tomcat-qa']) {
+	   sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@${params.tomcat_qa}:/opt/tomcat/webapps/"
+	   }
+	   }
+   }
    stage('Functional test') {
    steps {
 	  sh 'mvn -f functionaltest/pom.xml test' 
