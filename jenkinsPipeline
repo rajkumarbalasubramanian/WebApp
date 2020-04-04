@@ -25,6 +25,11 @@ pipeline {
 	  sh 'mvn -DskipTests=True clean package' 
 	  }
    }
+   stage('functional test') {
+   steps {
+	  sh 'mvn -DskipTests=True -f /Acceptancetest/pom.xml test' 
+	  }
+   }
    
     
    }
