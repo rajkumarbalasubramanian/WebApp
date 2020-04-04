@@ -1,0 +1,20 @@
+pipeline {
+	agent any
+	
+	tools {
+		maven "maven"
+	}
+	
+	parameters { 
+         string(name: 'tomcat_qa', defaultValue: '18.191.168.82', description: 'QA Server')
+         string(name: 'tomcat_prod', defaultValue: '18.220.138.54', description: 'Production Server')
+    } 
+    stages {
+    stage('blaze') {
+		steps {
+		 blazeMeterTest credentialsId: 'perf', testId: '7889218.taurus', workspaceId: '474121'
+		}
+    }
+   }
+}
+    
