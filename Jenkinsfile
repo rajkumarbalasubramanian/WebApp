@@ -96,15 +96,14 @@ post
 	{
 		always 
 		{
-				success
-					{
-						echo currentBuild.currentResult
-					}
-				failure 
-					{ 
-						echo currentBuild.currentResult
-					}
-				    
+			script {
+				def slackNotification = 
+				"""{
+					echo currentBuild.currentResult
+				   }"""
+				
+				slackNotification
+				}
 			}
    }
  }
