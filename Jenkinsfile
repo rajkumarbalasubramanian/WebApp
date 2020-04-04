@@ -27,9 +27,8 @@ stages {
 	
 	stage("Static Code Analysis"){
 		steps {
-		withSonarQubeEnv('sonarstatic') {
 			sh 'mvn -X -e sonar:sonar -Dsonar.host.url=http://40.112.181.60:9000/ -Dsonar.login=00baab7da8d59d4d17423d8d31c17addcd01e7eb'  
-       		}
+       		
 	}
 	
 	}
