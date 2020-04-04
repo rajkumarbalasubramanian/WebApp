@@ -97,11 +97,11 @@ post
 		always 
 		{
 			echo currentBuild.currentResult
-			success 
+			SUCCESS 
 				{
 					slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful"
 				}
-			failure 
+			FAILURE 
 				{ 
 					slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was failed"
 				}
