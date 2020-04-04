@@ -34,9 +34,7 @@ pipeline {
    }
    stage('Deploy to QA') {
    steps {
-	   sshagent(['tomcatnew']) {
-	   sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@${params.tomcat_qa}:/opt/tomcat/webapps/"
-	   }
+	 deploy adapters: [tomcat7(credentialsId: 'tomcatnew', path: '', url: 'http://18.191.168.82:8080/')], contextPath: '/QAWebapp', war: '**/*.war’
 	   }
    }
    stage('Functional test') {
