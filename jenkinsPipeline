@@ -1,8 +1,5 @@
 pipeline {
 	agent any
-	def rtMaven = Artifactory.newMavenBuild()
-    	def buildInfo
-   	rtMaven.tool = "maven"
 	tools {
 		maven "maven"
 	}
@@ -12,28 +9,17 @@ pipeline {
          string(name: 'tomcat_prod', defaultValue: '18.220.138.54', description: 'Production Server')
     } 
     stages {
-    stage('blaze') {
-		steps {
-		 blazeMeterTest credentialsId: 'perf', testId: '7889218.taurus', workspaceId: '474121'
-		}
-    }
+    
     stage('Clone sources') {
         git url: 'https://github.com/rajkumarbalasubramanian/WebApp.git'
    }
     stage('Maven Compile') {
-        buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean compile'
+        sh 'mvn -DskipTests=True clean compile'
    }
    stage('Build Project') {
-	 rtMaven.run pom: 'pom.xml', goals: 'clean package' 
+	  sh 'mvn -DskipTests=True clean package' 
    }
-    stage('functional test') {
-    	rtMaven.run pom: 'functionaltest/pom.xml', goals: 'test' 
-    }
-    
-     stage('sanity test') {
-    	rtMaven.run pom: 'Acceptancetest/pom.xml', goals: 'test' 
-    }
-    
+   
     
    }
 }
