@@ -11,13 +11,19 @@ pipeline {
     stages {
     
     stage('Clone sources') {
+    steps {
         git url: 'https://github.com/rajkumarbalasubramanian/WebApp.git'
+	}
    }
     stage('Maven Compile') {
+    steps {
         sh 'mvn -DskipTests=True clean compile'
+	}
    }
    stage('Build Project') {
+   steps {
 	  sh 'mvn -DskipTests=True clean package' 
+	  }
    }
    
     
