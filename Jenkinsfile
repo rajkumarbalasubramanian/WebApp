@@ -96,7 +96,7 @@ post
 	{
 		always 
 		{
-			slackSend message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER}. Status currentBuild.currentResult" 
+			slackSend message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER}. Status ${currentBuild.currentResult}" 
 					
 		}
    	}
