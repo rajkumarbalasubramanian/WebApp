@@ -12,6 +12,13 @@ pipeline {
 
     
 stages {
+	stage('Send notification') {
+		steps {
+		 slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+		}
+	
+	}
+}
     stage('Clone sources') {
 	    steps {
 		    git url: 'https://github.com/ashishgupta861/webapp.git'
