@@ -96,19 +96,20 @@ post
 	{
 		always 
 		{
-			echo currentBuild.currentResult
-			if (currentBuild.currentResult == "SUCCESS) 
-				{
-					echo currentBuild.currentResult
-					slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful"
-				}
-			if (currentBuild.currentResult == "FAILURE") 
-				{ 
-					echo currentBuild.currentResult
-					slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was failed"
-				}
-			
-		}
+			script {
+				echo currentBuild.currentResult
+				if (currentBuild.currentResult == "SUCCESS) 
+					{
+						echo currentBuild.currentResult
+						slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful"
+					}
+				if (currentBuild.currentResult == "FAILURE") 
+					{ 
+						echo currentBuild.currentResult
+						slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was failed"
+					}
+				    }
+			}
    }
  }
 
