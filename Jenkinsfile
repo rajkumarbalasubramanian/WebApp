@@ -50,7 +50,7 @@ stages {
 		{
 			sshagent(['tomcat-qa']) 
 			{
-				sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@${params.tomcat_qa}:/opt/tomcat/webapps/"
+				sh "curl -s --upload-file target/*.war http://ubuntu@${params.tomcat_qa}:8080/manager/text/deploy?path=/myapp&update=true
 			}
 		}
 	}
