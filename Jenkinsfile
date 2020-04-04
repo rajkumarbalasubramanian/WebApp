@@ -14,67 +14,51 @@ node {
 
 try {
 stages {
-    stage("notify") {
+   stage("notify") {
         slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
     }
-	
-    stage('Clone sources') {
+   stage('Clone sources') {
         git url: 'https://github.com/rajkumarbalasubramanian/WebApp.git'
-    }
-   
+   }
    stage("Static Code Analysis"){
  	withSonarQubeEnv('sonarstatic') {
         sh 'mvn sonar:sonar -Dsonar.sources=. -Dsonar.tests=. -Dsonar.test.inclusions=**/test/java/servlet/createpage_junit.java -Dsonar.exclusions=**/test/java/servlet/createpage_junit.java'
 	         } 
    }
-	
-
    stage('Maven Compile') {
         buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean compile'
-    }
-	
-    stage('Build Project') {
-	    steps {    
-	    rtMaven.run pom: 'pom.xml', goals: 'clean package' 
-        }
-    }
-
+   }
+   stage('Build Project') {
+	 rtMaven.run pom: 'pom.xml', goals: 'clean package' 
+   }
    stage('Deploy to QA') {
-		
-			sshagent(['tomcat-qa']) {
-				sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@${params.tomcat_qa}:/opt/tomcat/webapps/"
-			}
-
-			}
-	
-	    stage('Artifactory configuration') {
-        // Tool name from Jenkins configuration
+	   sshagent(['tomcat-qa']) {
+	   sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@${params.tomcat_qa}:/opt/tomcat/webapps/"
+	   }
+   }
+   stage('Artifactory configuration') {
+	 // Tool name from Jenkins configuration
         rtMaven.tool = "maven"
         // Set Artifactory repositories for dependencies resolution and artifacts deployment.
         rtMaven.deployer releaseRepo:'libs-release-local', snapshotRepo:'libs-snapshot-local', server: server
         rtMaven.resolver releaseRepo:'libs-release', snapshotRepo:'libs-snapshot', server: server
     }
-	
-stage('Deploy to prod') {
-		steps {
-			sshagent(['tomcat-prod']) {
-				sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@${params.tomcat_prod}:/opt/tomcat/webapps/"
-			}
-			}
-			}
+    stage('Deploy to prod') {
+	sshagent(['tomcat-prod']) {
+	sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@${params.tomcat_prod}:/opt/tomcat/webapps/"
+	}
+    }
+    stage('performance test') {
+	blazeMeterTest credentialsId: 'perf', testId: '7889218.taurus', workspaceId: '474121'
+	}
     stage('Publish build info') {
         server.publishBuildInfo buildInfo
     }
 }
-}
-	
-	catch (err) {
-
+}	
+catch (err) {
         currentBuild.result = "FAILURE"
-
-        
-
         throw err
-    }
-    }
+}
+}
 	 
