@@ -113,7 +113,7 @@ void sendNotification(buildResult) {
     			slackSend color: "warning", message: "UNSTABLE: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER}"
   		}
   		else {
-    			slackSend color: "danger", message: "UNKNOWN: Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER}"	
+			slackSend color: "danger", message: "${buildResult}: Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER}"	
   		     }
    	}
  
