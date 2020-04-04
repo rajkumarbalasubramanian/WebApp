@@ -36,6 +36,14 @@ stages {
 	
 	}
 	
+	stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
+	
 	stage('Deploy to QA') {
 		steps {
 			sshagent(['tomcat-qa']) {
