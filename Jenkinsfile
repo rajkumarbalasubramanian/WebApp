@@ -80,7 +80,8 @@ stage('Artifactory configuration') {
 }
      post {
         always {
-	    if ( currentBuild.currentResult == "SUCCESS" ) {
+		steps {
+		if ( currentBuild.currentResult == "SUCCESS" ) {
     			slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful"
   	}
   	    else if( currentBuild.currentResult == "FAILURE" ) { 
@@ -94,6 +95,6 @@ stage('Artifactory configuration') {
   	}        
 	}
     }
-	
+     }
 }
 
