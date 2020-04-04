@@ -6,8 +6,8 @@ pipeline {
 	}
 	
 	parameters { 
-         string(name: 'tomcat_qa', defaultValue: '3.135.204.131', description: 'QA Server')
-         string(name: 'tomcat_prod', defaultValue: '18.188.183.63', description: 'Production Server')
+         string(name: 'tomcat_qa', defaultValue: '18.191.168.82', description: 'QA Server')
+         string(name: 'tomcat_prod', defaultValue: '18.220.138.54', description: 'Production Server')
     } 
 
     
