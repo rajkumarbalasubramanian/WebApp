@@ -96,19 +96,15 @@ post
 	{
 		always 
 		{
-			script {
-				echo currentBuild.currentResult
-				if (currentBuild.currentResult == "SUCCESS) 
+				success
 					{
 						echo currentBuild.currentResult
-						slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful"
 					}
-				if (currentBuild.currentResult == "FAILURE") 
+				failure 
 					{ 
 						echo currentBuild.currentResult
-						slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was failed"
 					}
-				    }
+				    
 			}
    }
  }
