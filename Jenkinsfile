@@ -28,7 +28,7 @@ stages {
 	stage("Static Code Analysis"){
 		steps {
 		withSonarQubeEnv('sonarstatic') {
-      			 sh "mvn sonar:sonar"
+      			 sh "mvn -X -e sonar:sonar"
        		}
 	}
 	
