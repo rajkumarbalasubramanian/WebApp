@@ -34,7 +34,7 @@ pipeline {
    }
    stage('Deploy to QA') {
    steps {
-	   sshagent(['tomcat-qa']) {
+	   sshagent(['tomcatnew']) {
 	   sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@${params.tomcat_qa}:/opt/tomcat/webapps/"
 	   }
 	   }
