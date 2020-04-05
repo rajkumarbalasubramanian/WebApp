@@ -32,17 +32,17 @@ stages {
         }
     }
 	
-	//stage("Static Code Analysis")
-	//{
+	stage("Static Code Analysis")
+	{
 		
-	//	steps 
-	//	{
-	//		withSonarQubeEnv('sonarstatic') 
-	//		{
-          //      sh 'mvn sonar:sonar -Dsonar.sources=. -Dsonar.tests=. -Dsonar.test.inclusions=**/test/java/servlet/createpage_junit.java -Dsonar.exclusions=**/test/java/servlet/createpage_junit.java'
-            //}
-		//}
-	//}
+		steps 
+		{
+			withSonarQubeEnv('sonarstatic') 
+			{
+                sh 'mvn sonar:sonar -Dsonar.sources=. -Dsonar.tests=. -Dsonar.test.inclusions=**/test/java/servlet/createpage_junit.java -Dsonar.exclusions=**/test/java/servlet/createpage_junit.java'
+            }
+		}
+	}
 
 	stage('Deploy to QA') 
 	{
@@ -98,7 +98,7 @@ stages {
 		{
 			sshagent(['tomcat-prod']) 
 			{
-				sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@${params.tomcat_prod}:/opt/tomcat/webapps/"
+				sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@${params.tomcat_prod}:/opt/tomcat/webapps/ProdWebapp.war"
 			}
 		}
 	}
