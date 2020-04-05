@@ -55,12 +55,6 @@ stages {
 		}
 	}
 	
-	stage('Deploy to QA1') {
-		steps {
-			deploy adapters: [tomcat7(credentialsId: 'tomcat-qa', path: '', url: 'http://18.189.192.112:8080/')], contextPath: '/QAWebapp', war: '*/.war’
-			}
-		}
-
 	stage('Functional test') {
 		steps {
 			sh 'mvn -f functionaltest/pom.xml test'
