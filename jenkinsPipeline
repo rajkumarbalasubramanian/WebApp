@@ -29,7 +29,7 @@ pipeline {
    
    stage('send jira build info') {
    steps {
-	     jiraSendBuildInfo branch: '', site: 'devopsggb.atlassian.net' 
+	     jiraAddComment comment: 'Build completed', idOrKey: 'DEV-1', site: 'devggb' 
  
 	  }
    }
