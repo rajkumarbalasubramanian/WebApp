@@ -94,7 +94,7 @@ stages {
 	
 	stage('Performance test') {
 		steps {
-			blazeMeterTest credentialsId: 'perf', testId: '7889218.taurus', workspaceId: '474121'
+			blazeMeterTest credentialsId: 'perf', testId: '7890823.taurus', workspaceId: '474121'
 			}
 		}
 
