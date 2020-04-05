@@ -64,7 +64,7 @@ stages {
 	
 	stage('Upload Test Report to slack') {
 		steps {	
-			slackUploadFile filePath: '/var/lib/jenkins/workspace/p/functionaltest/target/surefire-reports/index.html'
+			slackUploadFile filePath: 'functionaltest/target/surefire-reports/index.html'
 		}
 	}
 	
