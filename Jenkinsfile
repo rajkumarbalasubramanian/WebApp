@@ -50,7 +50,7 @@ stages {
 		{
 			sshagent(['tomcat-qa']) 
 			{
-				sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@${params.tomcat_qa}:/opt/tomcat/webapps/"
+				sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@${params.tomcat_qa}:/opt/tomcat/webapps/QAWebapp.war"
 			}
 		}
 	}
