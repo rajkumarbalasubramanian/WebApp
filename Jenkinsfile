@@ -113,7 +113,7 @@ stages {
 	
 	stage('send jira comment on completion') {
 		steps {
-			jiraAddComment comment: 'Build and deployment completed', idOrKey: ${params.jiraId}, site: 'devggb'
+			jiraAddComment comment: "Build and deployment completed: ${env.BUILD_NUMBER}", idOrKey: ${params.jiraId}, site: 'devggb'
   			}
 		}
 }
