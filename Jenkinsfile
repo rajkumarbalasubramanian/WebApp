@@ -64,7 +64,7 @@ stages {
 	
 	stage('Upload Test Report to slack') {
 		steps {	
-			slackUploadFile filePath: 'functionaltest/target/surefire-reports/index.html'
+			slackUploadFile channel: '#devopsproject', credentialId: 'slackid', filePath: 'functionaltest/target/surefire-reports/index.html'
 		}
 	}
 	
