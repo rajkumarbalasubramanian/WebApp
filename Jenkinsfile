@@ -8,6 +8,8 @@ pipeline {
 	parameters { 
          string(name: 'tomcat_qa', defaultValue: '18.189.192.112', description: 'QA Server')
          string(name: 'tomcat_prod', defaultValue: '3.15.186.172', description: 'Production Server')
+	 string(name: 'jiraId', defaultValue: 'DEV-1', description: 'Jira ID')
+		
     } 
 
 stages {
@@ -107,6 +109,12 @@ stages {
 		steps {
 			sh 'mvn -f Acceptancetest/pom.xml test'
 			}
+		}
+	
+	stage('send jira comment on completion') {
+		steps {
+			jiraAddComment comment: 'Build and deployment completed', idOrKey: ${params.jiraId}, site: 'devggb'
+  			}
 		}
 }
 		
