@@ -20,40 +20,19 @@ pipeline {
         sh 'mvn -DskipTests=True clean compile'
 	}
    }
-   stage("Static Code Analysis"){
-   steps {
- 	withSonarQubeEnv('sonarqube') {
-        sh 'mvn sonar:sonar -Dsonar.sources=. -Dsonar.tests=. -Dsonar.test.inclusions=**/test/java/servlet/createpage_junit.java -Dsonar.exclusions=**/test/java/servlet/createpage_junit.java -Dsonar.login=admin -Dsonar.password=Zgjjr2bkkkdh'
-	 } 
-	 }
-   }
+
    stage('Build Project') {
    steps {
 	  sh 'mvn -DskipTests=True clean package' 
 	  }
    }
-   stage('Deploy to QA') {
-   steps {
-	 deploy adapters: [tomcat7(credentialsId: 'tomcatnew', path: '', url: 'http://18.191.168.82:8080/')], contextPath: '/QAWebapp', war: '**/*.war’
-	   }
-   }
-   stage('Functional test') {
-   steps {
-	  sh 'mvn -f functionaltest/pom.xml test' 
-	  }
-   }
    
-    stage('Sanity test') {
+   stage('send jira build info') {
    steps {
-	  sh 'mvn -f Acceptancetest/pom.xml test' 
+	     jiraSendBuildInfo branch: '', site: 'devopsggb.atlassian.net' 
+ 
 	  }
    }
-   stage('Performance test') {
-   steps {
-         blazeMeterTest credentialsId: 'perf', testId: '7889218.taurus', workspaceId: '474121'
-	}
-    }
-    
    }
 }
     
