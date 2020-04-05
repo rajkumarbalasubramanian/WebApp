@@ -55,6 +55,18 @@ stages {
 		}
 	}
 	
+	stage('Deploy to QA1') {
+		steps {
+			deploy adapters: [tomcat7(credentialsId: 'tomcat-qa', path: '', url: "http://${params.tomcat_qa}:8080/")], contextPath: '/QAWebapp', war: 'target/.war’
+			}
+		}
+	
+	stage('Functional test') {
+		steps {
+			sh 'mvn -f functionaltest/pom.xml test'
+			}
+		}
+	
 	stage('Artifactory configuration') 
 	{
 		steps 
@@ -80,6 +92,12 @@ stages {
 		}
 	}
 	
+	stage('Performance test') {
+		steps {
+			blazeMeterTest credentialsId: 'perf', testId: '7889218.taurus', workspaceId: '474121'
+			}
+		}
+
 	stage('Deploy to prod') 
 	{
 		steps 
@@ -90,8 +108,12 @@ stages {
 			}
 		}
 	}
-}
 	
+	stage('Sanity test') {
+		steps {
+			sh 'mvn -f Acceptancetest/pom.xml test'
+			}
+		}
 post 
 	{
 		always 
