@@ -105,6 +105,13 @@ stages {
 		}
 	}
 	
+	stage('waitForProdDeploy'){
+		steps {
+			waitUntil {
+				sh "wget --retry-connrefused --tries=120 --waitretry=5 -q http://${params.tomcat_prod}:8080/ProdWebapp/ -O /dev/null"
+				}
+		}
+	}
 	stage('Sanity test') {
 		steps {
 			sh 'mvn -f Acceptancetest/pom.xml test'
@@ -113,7 +120,7 @@ stages {
 	
 	stage('send jira comment on completion') {
 		steps {
-			jiraAddComment comment: "Build and deployment completed: ${env.BUILD_NUMBER}", idOrKey: "${params.jiraId}", site: 'devggb'
+			jiraAddComment comment: "Build and deployment completed: ${env.BUILD_NUMBER}", idOrKey: "${params.jiraId}", site: 'jiraDeploy'
   			}
 		}
 }
