@@ -30,7 +30,7 @@ stages {
     stage('Build Project') 
 	{
 	    steps {    
-			sh 'mvn -DskipTests=True clean package'
+			sh 'mvn clean package'
         }
     }
 	
@@ -107,7 +107,7 @@ stages {
 	
 	stage('waitForProdDeploy'){
 		steps {
-			sh 'sleep 30000'
+			sh 'sleep 30'
 		}
 	}
 	stage('Sanity test') {
