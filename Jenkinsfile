@@ -109,6 +109,7 @@ stages {
 			sh 'mvn -f Acceptancetest/pom.xml test'
 			}
 		}
+}
 post 
 	{
 		always 
