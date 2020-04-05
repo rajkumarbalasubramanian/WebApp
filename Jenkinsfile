@@ -34,17 +34,16 @@ stages {
         }
     }
 	
-	stage("Static Code Analysis")
-	{
-		
-		steps 
-		{
-			withSonarQubeEnv('sonarstatic') 
-			{
-                sh 'mvn sonar:sonar -Dsonar.sources=. -Dsonar.tests=. -Dsonar.test.inclusions=**/test/java/servlet/createpage_junit.java -Dsonar.exclusions=**/test/java/servlet/createpage_junit.java'
-            }
-		}
-	}
+	//stage("Static Code Analysis")
+	//{	
+	//	steps 
+	//	{
+	//		withSonarQubeEnv('sonarstatic') 
+	//		{
+          //      sh 'mvn sonar:sonar -Dsonar.sources=. -Dsonar.tests=. -Dsonar.test.inclusions=**/test/java/servlet/createpage_junit.java -Dsonar.exclusions=**/test/java/servlet/createpage_junit.java'
+            //}
+		//}
+	//}
 
 	stage('Deploy to QA') 
 	{
@@ -62,6 +61,12 @@ stages {
 			sh 'mvn -f functionaltest/pom.xml test'
 			}
 		}
+	
+	stage('Upload Test Report to slack') {
+		steps {	
+			slackUploadFile filePath: '/var/lib/jenkins/workspace/p/functionaltest/target/surefire-reports/index.html'
+		}
+	}
 	
 	stage('Artifactory configuration') 
 	{
