@@ -32,17 +32,17 @@ stages {
         }
     }
 	
-	stage("Static Code Analysis")
-	{
+	//stage("Static Code Analysis")
+	//{
 		
-		steps 
-		{
-			withSonarQubeEnv('sonarstatic') 
-			{
-                sh 'mvn sonar:sonar -Dsonar.sources=. -Dsonar.tests=. -Dsonar.test.inclusions=**/test/java/servlet/createpage_junit.java -Dsonar.exclusions=**/test/java/servlet/createpage_junit.java'
-            }
-		}
-	}
+	//	steps 
+	//	{
+	//		withSonarQubeEnv('sonarstatic') 
+	//		{
+          //      sh 'mvn sonar:sonar -Dsonar.sources=. -Dsonar.tests=. -Dsonar.test.inclusions=**/test/java/servlet/createpage_junit.java -Dsonar.exclusions=**/test/java/servlet/createpage_junit.java'
+            //}
+		//}
+	//}
 
 	stage('Deploy to QA') 
 	{
